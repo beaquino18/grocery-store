@@ -1,5 +1,7 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from datetime import date, datetime
+
+from flask_login import current_user
 from grocery_app.models import GroceryStore, GroceryItem
 from grocery_app.forms import GroceryStoreForm, GroceryItemForm
 
@@ -25,7 +27,8 @@ def new_store():
     if form.validate_on_submit():
         create_store = GroceryStore(
             title=form.title.data,
-            address=form.address.data
+            address=form.address.data,
+            created_by=current_user,
         )
         
         db.session.add(create_store)
@@ -46,7 +49,8 @@ def new_item():
             price = form.price.data,
             category = form.category.data,
             photo_url = form.photo_url.data,
-            store = form.store.data
+            store = form.store.data,
+            created_by=current_user
         )
         
         db.session.add(create_item)
