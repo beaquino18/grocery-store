@@ -93,4 +93,36 @@ def item_detail(item_id):
 
     return render_template('item_detail.html', item=item, form=form)
 
+@main.route('/shopping_list', methods=['GET'])
+@login_required
+def shopping_list():
+    """ Display the current user's shopping list """
+    return render_template('shopping_list.html', shopping_list_items=current_user.shopping_list_items)
 
+@main.route('/add_shopping/<item_id>', methods=['POST'])
+@login_required
+def add_to_shopping_list(item_id):
+    """ Adds item to current user's shopping list """
+    shop_item = GroceryItem.query.get(item_id)
+    
+    if shop_item not in current_user.shopping_list_items:
+        current_user.shopping_list_items.append(shop_item)
+        db.session.commit()
+        
+        flash(f"You added {shop_item.name} to your shopping list")
+        
+    return redirect(url_for('main.item_detail', shop_item_id = item_id))
+
+@main.route('/remove_shopping/<item_id>', methods=['POST'])
+@login_required
+def remove_to_shopping_list(item_id):
+    """ Removes item to current user's shopping list"""
+    shop_item = GroceryItem.query.get(item_id)
+    
+    if shop_item in current_user.shopping_list_items:
+        current_user.shopping_list_items.remove(shop_item)
+        db.session.commit()
+        
+        flash(f"You removed {shop_item.name} from your shopping list")
+    
+    return redirect(url_for('main.item_detail', shop_item_id = item_id))
