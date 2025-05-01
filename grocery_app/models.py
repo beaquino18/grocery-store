@@ -1,6 +1,6 @@
 from grocery_app.extensions import db
 from grocery_app.utils import FormEnum
-
+import enum
 
 class ItemCategory(FormEnum):
     """Categories of grocery items."""
@@ -19,12 +19,14 @@ class GroceryStore(db.Model):
     address = db.Column(db.String(200), nullable=False)
     items = db.relationship('GroceryItem', back_populates='store')
 
-
+    def __str__(self):
+        return f'{self.title}'
+    
 class GroceryItem(db.Model):
     """Grocery Item model."""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
-    price = db.Column(db.Float(precision=2), nullable=False)
+    price = db.Column(db.Numeric(precision=10, scale=2), nullable=False)
     category = db.Column(db.Enum(ItemCategory), default=ItemCategory.OTHER)
     photo_url = db.Column(db.String)
     store_id = db.Column(
