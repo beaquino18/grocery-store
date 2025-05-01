@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Sign up</h1>
+
+{% with form=form, action='/signup', legend="Create an Account" %}
+  {% include '_form_field_login_signup.html' %}
+{% endwith %}
+
+
+{% endblock %}
