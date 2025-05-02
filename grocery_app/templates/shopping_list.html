@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>My Shopping List</h1>
+
+
+
+{% if shopping_list_items %}
+  <section>
+    {% for item in shopping_list_items %}
+      <section>
+        <table style="width: 80%">
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Store</th>
+          </tr>
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>${{ item.price }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.store }}</td>
+          </tr>
+        </table>
+      </section>
+    {% endfor %}
+  </section>
+{% else %}  
+  <em> You don't have any item in your shopping list</em>
+{% endif %}
+
+
+{% endblock %}

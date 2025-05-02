@@ -111,7 +111,7 @@ def add_to_shopping_list(item_id):
         
         flash(f"You added {shop_item.name} to your shopping list")
         
-    return redirect(url_for('main.item_detail', shop_item_id = item_id))
+    return redirect(url_for('main.item_detail', item_id = item_id))
 
 @main.route('/remove_shopping/<item_id>', methods=['POST'])
 @login_required
@@ -125,4 +125,4 @@ def remove_to_shopping_list(item_id):
         
         flash(f"You removed {shop_item.name} from your shopping list")
     
-    return redirect(url_for('main.item_detail', shop_item_id = item_id))
+    return redirect(url_for('main.item_detail', item_id = item_id))

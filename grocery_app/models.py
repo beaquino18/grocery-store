@@ -51,5 +51,5 @@ class User(UserMixin, db.Model):
         'GroceryItem', secondary='user_item', back_populates="users_shopping_list")
     
 shopping_list_table = db.Table('user_item',
-    db.Column('grocery_item_id', db.Integer, db.ForeignKey('grocery_item.id')),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')))
+    db.Column('grocery_item_id', db.Integer, db.ForeignKey('grocery_item.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True))
